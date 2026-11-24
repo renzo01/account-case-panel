@@ -1,0 +1,92 @@
+<template>
+    <lightning-card title="Case Panel" icon-name="standard:case">
+        <div class="slds-p-around_medium">
+            <div class="slds-grid slds-wrap slds-gutters slds-m-bottom_medium">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-m-bottom_small">
+                    <div class="counter slds-box">
+                        <p class="slds-text-title_caps slds-text-color_weak">Open</p>
+                        <p class="slds-text-heading_large counter-value">{openCount}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-m-bottom_small">
+                    <div class="counter slds-box">
+                        <p class="slds-text-title_caps slds-text-color_weak">Closed</p>
+                        <p class="slds-text-heading_large counter-value">{closedCount}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-m-bottom_small">
+                    <div class="counter slds-box counter-high">
+                        <p class="slds-text-title_caps slds-text-color_weak">Open High Priority</p>
+                        <p class="slds-text-heading_large counter-value">{openHighPriorityCount}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-wrap slds-gutters slds-m-bottom_medium filters">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-combobox
+                        name="statusFilter"
+                        label="Status"
+                        value={statusFilter}
+                        options={statusOptions}
+                        onchange={handleStatusChange}
+                    ></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-combobox
+                        name="priorityFilter"
+                        label="Priority"
+                        value={priorityFilter}
+                        options={priorityOptions}
+                        onchange={handlePriorityChange}
+                    ></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-m-top_small">
+                    <template if:true={hasActiveFilters}>
+                        <lightning-button
+                            label="Clear filters"
+                            variant="base"
+                            onclick={clearFilters}
+                        ></lightning-button>
+                    </template>
+                </div>
+            </div>
+
+            <template if:true={hasError}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_medium" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <p class="slds-m-right_small">{errorMessage}</p>
+                    <lightning-button
+                        label="Retry"
+                        variant="neutral"
+                        onclick={handleRetry}
+                    ></lightning-button>
+                </div>
+            </template>
+
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading Cases" size="medium"></lightning-spinner>
+            </template>
+
+            <template if:true={showEmptyState}>
+                <div class="slds-align_absolute-center slds-p-around_large slds-text-align_center empty-state">
+                    <div>
+                        <p class="slds-text-heading_small">{emptyTitle}</p>
+                        <p class="slds-text-color_weak slds-m-top_x-small">{emptyMessage}</p>
+                    </div>
+                </div>
+            </template>
+
+            <template if:false={showEmptyState}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={filteredCases}
+                    columns={columns}
+                    onrowaction={handleRowAction}
+                    hide-checkbox-column
+                    suppress-bottom-bar
+                ></lightning-datatable>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,19 @@
+.counter {
+    border-left: 4px solid #0176d3;
+}
+
+.counter-high {
+    border-left-color: #ba0517;
+}
+
+.counter-value {
+    color: #080707;
+}
+
+.empty-state {
+    min-height: 8rem;
+}
+
+.filters {
+    align-items: end;
+}
