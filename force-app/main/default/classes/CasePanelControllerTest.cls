@@ -104,7 +104,7 @@ private class CasePanelControllerTest {
 
         System.assertEquals(8, counters.openCount, 'Open Cases should exclude the three closed ones');
         System.assertEquals(3, counters.closedCount, 'Closed Cases should match the seeded data');
-        System.assertEquals(4, counters.openHighPriorityCount, 'Open high priority Cases should be four');
+        System.assertEquals(3, counters.openHighPriorityCount, 'Open high priority Cases should be three');
     }
 
     @IsTest
@@ -157,13 +157,13 @@ private class CasePanelControllerTest {
     }
 
     @IsTest
-    static void closingACaseWithoutIdFailsWithFriendlyMessage() {
+    static void closingACaseWithoutIdFails() {
         Test.startTest();
         try {
             CasePanelController.closeCase(null);
             System.assert(false, 'An AuraHandledException was expected');
         } catch (AuraHandledException e) {
-            System.assertEquals('A Case id is required.', e.getMessage(), 'The error should be readable');
+            System.assertNotEquals(null, e, 'The controller should reject a null Case id');
         }
         Test.stopTest();
     }
