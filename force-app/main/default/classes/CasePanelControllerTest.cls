@@ -168,6 +168,22 @@ private class CasePanelControllerTest {
         Test.stopTest();
     }
 
+    @IsTest
+    static void closingAMissingCaseFailsWithAFriendlyMessage() {
+        Id missingCaseId = '500000000000000AAA';
+
+        Test.startTest();
+        try {
+            CasePanelController.closeCase(missingCaseId);
+            System.assert(false, 'An AuraHandledException was expected');
+        } catch (AuraHandledException e) {
+            // The platform replaces the message with a generic one in tests,
+            // so we assert the exception type instead of the text.
+            System.assertNotEquals(null, e, 'A missing Case should fail as a handled exception');
+        }
+        Test.stopTest();
+    }
+
     private static Account getAccountWithCases() {
         return [SELECT Id FROM Account WHERE Name = 'Acme Support' LIMIT 1];
     }

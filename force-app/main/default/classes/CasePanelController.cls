@@ -89,14 +89,20 @@ public with sharing class CasePanelController {
             throw new AuraHandledException('A Case id is required.');
         }
 
-        Case record = [
+        List<Case> records = [
             SELECT Id, Status
             FROM Case
             WHERE Id = :caseId
             WITH USER_MODE
             LIMIT 1
         ];
+        if (records.isEmpty()) {
+            throw new AuraHandledException(
+                'This Case no longer exists or you no longer have access to it.'
+            );
+        }
 
+        Case record = records[0];
         record.Status = CLOSED_STATUS;
 
         try {
