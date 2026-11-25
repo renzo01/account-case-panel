@@ -16,9 +16,10 @@ public with sharing class CasePanelController {
 
     /**
      * Returns the 50 most recent Cases for an Account, newest first.
-     * USER_MODE enforces object and field permissions at query time.
+     * Not cacheable: the component must reload the list right after closing a Case,
+     * and a cached response would bring the old Status back.
      */
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<Case> getCases(Id accountId) {
         if (accountId == null) {
             return new List<Case>();
