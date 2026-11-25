@@ -1,13 +1,13 @@
 .counter {
-    border-left: 4px solid #0176d3;
+    border-left: 4px solid var(--slds-g-color-palette-blue-50, #0176d3);
 }
 
 .counter-high {
-    border-left-color: #ba0517;
+    border-left-color: var(--slds-g-color-palette-red-40, #ba0517);
 }
 
 .counter-value {
-    color: #080707;
+    color: var(--slds-g-color-palette-neutral-10, #080707);
 }
 
 .empty-state {
