@@ -118,8 +118,12 @@ export default class AccountCasePanel extends LightningElement {
         return this.filteredCases.length > 0;
     }
 
+    get showTable() {
+        return !this.hasError && this.hasFilteredCases;
+    }
+
     get showEmptyState() {
-        return !this.isLoading && !this.hasFilteredCases;
+        return !this.isLoading && !this.hasError && !this.hasFilteredCases;
     }
 
     get emptyTitle() {

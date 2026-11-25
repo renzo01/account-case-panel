@@ -1,7 +1,7 @@
 <template>
     <lightning-card title="Case Panel" icon-name="standard:case">
         <div class="slds-p-around_medium">
-            <div class="slds-grid slds-wrap slds-gutters slds-m-bottom_medium">
+            <div class="slds-grid slds-wrap slds-gutters slds-m-bottom_medium" aria-live="polite">
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-m-bottom_small">
                     <div class="counter slds-box">
                         <p class="slds-text-title_caps slds-text-color_weak">Open</p>
@@ -77,7 +77,7 @@
                 </div>
             </template>
 
-            <template if:false={showEmptyState}>
+            <template if:true={showTable}>
                 <lightning-datatable
                     key-field="Id"
                     data={filteredCases}
